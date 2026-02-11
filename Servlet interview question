@@ -1,0 +1,163 @@
+1) What is a Servlet?
+A Servlet is a Java class used to create dynamic web applications.
+It runs on a web server (like Tomcat) and handles client requests and generates responses (usually HTML).
+________________________________________
+2) What are the main phases of the Servlet lifecycle?
+The servlet lifecycle has 3 main phases:
+1.	init() – Called once when the servlet is created.
+2.	service() – Called for every request.
+3.	destroy() – Called once before servlet is removed.
+________________________________________
+3) What is the difference between GenericServlet and HttpServlet?
+GenericServlet	HttpServlet
+Protocol independent	HTTP specific
+Overrides service()	Overrides doGet(), doPost()
+Used rarely	Mostly used in web apps
+👉 In real projects, we mostly extend HttpServlet.
+________________________________________
+4) Difference between doGet() and doPost()
+doGet()	doPost()
+Data sent in URL	Data sent in body
+Limited data size	No size limit
+Less secure	More secure
+Used for fetching data	Used for form submission
+________________________________________
+5) What is ServletConfig?
+ServletConfig is used to get initialization parameters of a specific servlet.
+Example:
+<init-param>
+   <param-name>username</param-name>
+   <param-value>admin</param-value>
+</init-param>
+________________________________________
+6) What is ServletContext?
+ServletContext is used to share data between all servlets in an application.
+Example:
+getServletContext().setAttribute("name", "Ragu");
+________________________________________
+7) What is RequestDispatcher?
+Used to forward request from one servlet to another resource.
+RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
+rd.forward(request, response);
+👉 URL does NOT change.
+________________________________________
+8) What is sendRedirect()?
+Redirects client to another resource.
+response.sendRedirect("home.jsp");
+👉 URL changes.
+________________________________________
+9) What are different ways of session management?
+1.	Cookies
+2.	HttpSession
+3.	URL Rewriting
+4.	Hidden Fields
+________________________________________
+10) What is web.xml?
+Deployment descriptor file used to configure:
+•	Servlet mapping
+•	Init parameters
+•	Filters
+•	Listeners
+________________________________________
+🟡 INTERMEDIATE LEVEL (11–20)
+________________________________________
+11) What is HttpSession?
+Used to maintain user session between multiple requests.
+HttpSession session = request.getSession();
+session.setAttribute("user", "Ragu");
+________________________________________
+12) What are Cookies?
+Small pieces of data stored in the browser.
+Cookie c = new Cookie("user", "Ragu");
+response.addCookie(c);
+________________________________________
+13) What are Filters?
+Filters are used to:
+•	Validate login
+•	Logging
+•	Modify request/response
+Example:
+@WebFilter("/*")
+________________________________________
+14) What are Listeners?
+Used to listen for events like:
+•	Session creation
+•	Session destruction
+•	Context initialization
+Example:
+@WebListener
+________________________________________
+15) What is @WebServlet annotation?
+Used instead of web.xml.
+@WebServlet("/login")
+________________________________________
+16) Is Servlet thread-safe?
+No ❌
+Servlets are not thread-safe because multiple threads access the same instance.
+________________________________________
+17) How do you make a servlet thread-safe?
+1.	Avoid instance variables
+2.	Use local variables
+3.	Synchronization (not recommended)
+________________________________________
+18) What is MVC in Servlets?
+MVC = Model View Controller
+•	Servlet → Controller
+•	JSP → View
+•	Java Class → Model
+________________________________________
+19) What happens if init() throws exception?
+Servlet will not be loaded and server throws ServletException.
+________________________________________
+20) What is load-on-startup?
+Used to load servlet at server startup.
+<load-on-startup>1</load-on-startup>
+________________________________________
+🔴 ADVANCED LEVEL (21–30)
+________________________________________
+21) What is the difference between forward() and sendRedirect()?
+forward()	sendRedirect()
+Server-side	Client-side
+Same request	New request
+Faster	Slower
+________________________________________
+22) Can we override service() method?
+Yes.
+But usually we override doGet() or doPost().
+________________________________________
+23) How does servlet handle multiple requests?
+Container creates multiple threads for same servlet instance.
+________________________________________
+24) What is SingleThreadModel?
+Old interface used to make servlet thread-safe.
+Now deprecated ❌
+________________________________________
+25) What is difference between getRequestDispatcher() and getNamedDispatcher()?
+•	getRequestDispatcher() → by path
+•	getNamedDispatcher() → by servlet name
+________________________________________
+26) How do you handle exception in servlet?
+1.	Try-catch block
+2.	web.xml error-page mapping
+3.	Custom error page
+________________________________________
+27) What is URL rewriting?
+Appending session ID in URL:
+http://example.com/home;jsessionid=12345
+Used when cookies are disabled.
+________________________________________
+28) What is asynchronous servlet?
+Used for long-running tasks without blocking threads.
+@WebServlet(asyncSupported = true)
+________________________________________
+29) What is difference between getWriter() and getOutputStream()?
+getWriter()	getOutputStream()
+Text data	Binary data
+HTML	PDF, Image
+________________________________________
+30) How do you secure a servlet?
+1.	Use HTTPS
+2.	Configure security in web.xml
+3.	Use filters for authentication
+4.	Use Spring Security (advanced)
+
