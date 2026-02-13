@@ -1,0 +1,161 @@
+1. What is AOP and why is it used in Spring Boot?
+
+Answer:
+AOP (Aspect-Oriented Programming) is used to separate cross-cutting concerns like logging, security, and transactions from business logic.
+
+👉 This improves:
+
+Code reusability
+
+Clean architecture
+
+Maintainability
+
+2. What are cross-cutting concerns? Give examples.
+
+Answer:
+Concerns that affect multiple parts of an application.
+
+Examples:
+
+Logging
+
+Authentication
+
+Transactions
+
+Exception handling
+
+3. What are the main AOP concepts?
+
+Answer:
+
+Aspect → class containing cross-cutting logic
+
+Advice → action performed (before/after)
+
+JoinPoint → method execution point
+
+Pointcut → expression to select methods
+
+Proxy → object that applies aspect
+
+4. What is the difference between @Before and @Around advice?
+Feature	@Before	@Around
+Execution	Before method	Before + After
+Can control method call	❌ No	✅ Yes
+Can change return value	❌ No	✅ Yes
+5. What is a Pointcut expression?
+
+Answer:
+A pointcut expression defines which methods the advice applies to.
+
+Example:
+
+@Pointcut("execution(* com.app.service.*.*(..))")
+
+👉 Means all methods in service package.
+
+6. Explain execution() syntax in AOP
+
+Answer:
+
+execution(return-type package.class.method(args))
+
+Example:
+
+execution(* com.bank.service.AccountService.transfer(..))
+
+7. What is JoinPoint vs ProceedingJoinPoint?
+JoinPoint	ProceedingJoinPoint
+Used in Before/After	Used in Around
+Cannot control execution	Can call proceed()
+
+8. How does Spring AOP work internally?
+
+Answer:
+Spring AOP uses proxy-based mechanism.
+
+Flow:
+
+Client → Proxy → Target Object
+
+Proxy intercepts method calls and applies aspects.
+
+9. What is JDK Dynamic Proxy vs CGLIB?
+Feature	JDK Proxy	CGLIB
+Needs interface	Yes	No
+Creates proxy using	Interface	Subclass
+Performance	Faster	Slightly slower
+
+10. What is @EnableAspectJAutoProxy?
+
+Answer:
+It enables AOP support in Spring Boot.
+
+@EnableAspectJAutoProxy
+
+11. What is self-invocation problem in AOP?
+
+Answer:
+When a method inside a class calls another method in the same class, AOP does not work because proxy is bypassed.
+
+12. How does @Transactional use AOP internally?
+
+Answer:
+Spring creates a transaction proxy:
+
+Start transaction
+
+Execute method
+
+Commit or rollback
+
+13. What are different types of Advice in Spring AOP?
+
+Answer:
+
+@Before
+
+@After
+
+@AfterReturning
+
+@AfterThrowing
+
+@Around
+
+14. What are limitations of Spring AOP?
+
+Answer:
+
+Only works on public methods
+
+Only method execution join points
+
+Self-invocation problem
+
+Proxy-based (runtime only)
+
+15. Give real-time use cases of AOP in projects
+
+Answer:
+
+In real projects AOP is used for:
+
+✔ Logging API requests
+✔ Security checks
+✔ Transaction management
+✔ Performance monitoring
+✔ Audit logging
+
+Example:
+
+@Around("execution(* com.app.service.*.*(..))")
+public Object logTime(ProceedingJoinPoint pjp) throws Throwable {
+    long start = System.currentTimeMillis();
+    Object result = pjp.proceed();
+    long end = System.currentTimeMillis();
+    System.out.println("Time taken: " + (end - start));
+    return result;
+}
