@@ -1,0 +1,8 @@
+difference between jar and war 
+JAR is used for standalone Java applications with an embedded server, while WAR is used for web applications that are deployed on external servlet containers like Tomcat.
+
+is Jar able to do the work of war ?
+Yes, a JAR can do the work of a WAR in modern Spring Boot applications, because it contains an embedded web server (Tomcat/Jetty) and can run a web application independently.
+but still There are still situations where WAR is required
+1️⃣ Organization uses external server
+2️⃣ Multiple apps on same server
