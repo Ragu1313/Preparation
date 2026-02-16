@@ -1,0 +1,176 @@
+Why spring is loosely coupled?
+Spring is loosely coupled because it uses Dependency Injection and Inversion of Control, where objects depend on interfaces rather 
+than concrete implementations, and the Spring container manages and injects dependencies at runtime.
+
+Q: What happens if multiple beans of same type exist?
+
+👉 You say:
+
+“Spring throws NoUniqueBeanDefinitionException.
+We resolve it using @Primary or @Qualifier to tell Spring which bean to inject.”
+
+
+🔹 1. What is Tight Coupling (Problem)?
+
+In traditional Java (without Spring), classes create their dependencies directly.
+
+❌ Example (Tightly Coupled)
+
+class Engine {
+    void start() {
+        System.out.println("Engine started");
+    }
+}
+
+class Car {
+    private Engine engine = new Engine(); // direct dependency
+
+    void drive() {
+        engine.start();
+        System.out.println("Car is moving");
+    }
+}
+
+
+🔴 Problem:
+
+Car is tightly dependent on Engine
+
+If you change Engine → you must modify Car
+
+Hard to test, extend, or replace components
+
+------------------------------------------------------------
+
+🔹 2. Loose Coupling Concept
+
+Loose coupling means:
+
+👉 Classes depend on interfaces, not concrete classes
+👉 The object creation is handled externally
+
+🔹 3. How Spring Achieves Loose Coupling
+
+Spring uses:
+
+✅ 1. Dependency Injection (DI)
+✅ 2. Inversion of Control (IoC)
+✅ 3. Interface-based design
+
+
+🔹 4. Example with Spring (Loosely Coupled)
+Step 1: Create Interface
+public interface Engine {
+    void start();
+}
+Step 2: Implementations
+
+@Component
+public class DieselEngine implements Engine {
+    public void start() {
+        System.out.println("Diesel Engine started");
+    }
+}
+Step 3: Inject Dependency in Car
+@Component
+public class Car {
+
+    private Engine engine;
+
+    @Autowired
+    public Car(Engine engine) {
+        this.engine = engine;
+    }
+
+    public void drive() {
+        engine.start();
+        System.out.println("Car is moving");
+    }
+}
+
+🔹 5. What Spring Does Internally
+
+Spring container:
+
+Creates objects (Beans)
+
+Finds dependencies
+
+Injects them automatically
+
+So Car does not create Engine → Spring injects it.
+
+🔹 6. Why This is Loosely Coupled
+
+Because:
+
+✔ Car depends on Engine interface
+✔ You can switch implementation anytime
+✔ No change required in Car class
+
+Example:
+
+Change:
+
+@Component
+@Primary
+public class DieselEngine implements Engine
+
+Now Spring will inject DieselEngine instead of PetrolEngine
+👉 Car code remains unchanged
+
+---------------------------------------------------------------------------------------
+
+You have two classes implementing the same interface:
+
+❓ So which bean will Spring inject?
+
+👉 Answer: Spring will get confused and throw an exception ❌
+
+Because:
+
+Spring finds 2 beans of type Engine
+
+petrolEngine
+
+dieselEngine
+
+But your injection point expects only one
+
+It throw exception 
+NoUniqueBeanDefinitionException:
+No qualifying bean of type 'Engine' available:
+expected single matching bean but found 2:
+petrolEngine,dieselEngine
+
+We have 3 ways to avoid this
+✔️ 1. Use @Primary (Most common)
+
+Mark one implementation as default:
+
+@Component
+@Primary
+public class PetrolEngine implements Engine { ... }
+
+Now Spring will inject PetrolEngine by default.
+
+✔️ 2. Use @Qualifier (Best practice in real projects)
+
+Specify exactly which bean you want:
+
+@Autowired
+@Qualifier("dieselEngine")
+private Engine engine;
+
+👉 Bean name = class name starting with lowercase (dieselEngine)
+
+✔️ 3. Inject All Beans (Advanced use)
+
+If you want both engines:
+
+@Autowired
+private List<Engine> engines;
+
+Now Spring will inject:
+
+[PetrolEngine, DieselEngine]
