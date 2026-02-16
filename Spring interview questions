@@ -466,3 +466,11 @@ Answer: Auto configuration + starters
 
 10. How to disable auto configuration?
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
+
+
+11. How do you validate input in Spring Boot?
+
+Using @Valid and @NotNull, @Size
+
+@PostMapping
+public ResponseEntity save(@Valid @RequestBody User user){}
