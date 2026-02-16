@@ -1,0 +1,468 @@
+🟢 BASIC LEVEL (15 Questions)
+1. What is Spring Framework?
+
+Answer:
+Spring is a Java framework that provides Inversion of Control (IoC) and Dependency Injection (DI) to build loosely coupled applications.
+
+Real-time use case:
+In a banking app, service classes depend on repository classes. Spring injects dependencies automatically.
+
+2. What is IoC (Inversion of Control)?
+
+Answer:
+IoC means Spring container controls object creation and lifecycle instead of the programmer.
+
+3. What is Dependency Injection?
+
+Answer:
+Injecting dependencies via constructor/setter instead of creating objects manually.
+
+Example:
+
+@Service
+public class UserService {
+    private final UserRepository repo;
+
+    @Autowired
+    public UserService(UserRepository repo){
+        this.repo = repo;
+    }
+}
+4. What are different types of DI?
+
+Answer:
+
+Constructor Injection ✅ (Recommended)
+
+Setter Injection
+
+Field Injection
+
+5. What is Spring Bean?
+
+Answer:
+A bean is an object managed by the Spring container.
+
+6. Bean scopes in Spring?
+
+Answer:
+
+Singleton (default)
+
+Prototype
+
+Request
+
+Session
+
+7. What is Spring Boot?
+
+Answer:
+Spring Boot is a framework that simplifies Spring apps using:
+
+Auto configuration
+
+Embedded servers
+
+Starter dependencies
+
+8. What is @SpringBootApplication?
+
+Answer:
+Combination of:
+
+@Configuration
+@EnableAutoConfiguration
+@ComponentScan
+9. What is Auto Configuration?
+
+Answer:
+Spring Boot automatically configures beans based on classpath dependencies.
+
+10. What is application.properties?
+
+Answer:
+File used to configure Spring Boot application settings.
+
+server.port=8081
+spring.datasource.url=jdbc:mysql://localhost:3306/app
+11. What is @RestController?
+
+Answer:
+Combines:
+
+@Controller + @ResponseBody
+
+Used to create REST APIs.
+
+12. Difference between @Component, @Service, @Repository?
+
+Answer:
+
+@Component → generic
+
+@Service → business layer
+
+@Repository → persistence layer (exception translation)
+
+13. What is @RequestMapping?
+
+Answer:
+Maps HTTP requests to controller methods.
+
+14. What is @Autowired?
+
+Answer:
+Used for dependency injection.
+
+15. What is Spring Data JPA?
+
+Answer:
+It simplifies database operations using repositories.
+
+🟡 INTERMEDIATE LEVEL (20 Questions)
+1. What is Bean Lifecycle?
+
+Answer:
+
+Instantiate
+
+Populate properties
+
+@PostConstruct
+
+Ready
+
+@PreDestroy
+
+2. What is Hibernate?
+
+Answer:
+ORM framework used by Spring Data JPA.
+
+3. Difference between JPA and Hibernate?
+
+Answer:
+
+JPA → Specification
+
+Hibernate → Implementation
+
+4. What is @Entity?
+
+Answer:
+Marks class as DB table.
+
+@Entity
+public class User {
+    @Id
+    private Long id;
+}
+5. What is @Transactional?
+
+Answer:
+Ensures DB operations are atomic.
+
+Use case: money transfer in banking
+
+6. What is Lazy vs Eager loading?
+
+Answer:
+
+Lazy → load when needed
+
+Eager → load immediately
+
+7. What is @ControllerAdvice?
+
+Answer:
+Global exception handler.
+
+@ControllerAdvice
+public class GlobalException {
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handle(){
+        return ResponseEntity.badRequest().body("Error");
+    }
+}
+8. What is Spring Security?
+
+Answer:
+Framework for authentication & authorization.
+
+9. What is JWT?
+
+Answer:
+JSON Web Token used for stateless authentication.
+
+10. Filter vs Interceptor?
+Feature	Filter	Interceptor
+Level	Servlet	Spring MVC
+Use	Logging, security	Controller pre/post handling
+11. What is @Valid?
+
+Answer:
+Used for request validation.
+
+public ResponseEntity save(@Valid @RequestBody User user)
+12. What is @PathVariable vs @RequestParam?
+
+Answer:
+
+PathVariable → URL path
+
+RequestParam → query param
+
+13. What is Pageable in Spring Data?
+
+Answer:
+Used for pagination.
+
+14. What is @Query annotation?
+
+Answer:
+Custom SQL/JPQL query.
+
+15. What is AOP?
+
+Answer:
+Separates cross-cutting concerns like logging.
+
+16. Types of Advice?
+
+Answer:
+
+Before
+
+After
+
+Around
+
+AfterReturning
+
+AfterThrowing
+
+17. What is Eureka?
+
+Answer:
+Service registry in microservices.
+
+18. What is Feign Client?
+
+Answer:
+Declarative REST client.
+
+19. What is API Gateway?
+
+Answer:
+Single entry point for microservices.
+
+20. REST API Best Practices?
+
+Answer:
+
+Use proper HTTP methods
+
+Use status codes
+
+Version APIs
+
+Use DTOs
+
+🔴 ADVANCED LEVEL (15 Questions)
+1. How does Spring Boot Auto Configuration work internally?
+
+Answer:
+Uses spring.factories + @Conditional annotations.
+
+2. How to handle distributed transactions in microservices?
+
+Answer:
+
+Saga pattern
+
+Event-driven approach
+
+3. How does @Transactional work internally?
+
+Answer:
+Uses AOP proxy to manage transactions.
+
+4. What is propagation in transactions?
+
+Answer:
+
+REQUIRED
+
+REQUIRES_NEW
+
+NESTED
+
+5. What is isolation level?
+
+Answer:
+
+READ_COMMITTED
+
+REPEATABLE_READ
+
+SERIALIZABLE
+
+6. How to secure REST API using JWT?
+
+Answer flow:
+
+Login → generate token
+
+Send token in header
+
+Validate in filter
+
+7. Difference between OAuth2 and JWT?
+
+Answer:
+
+OAuth2 → authorization framework
+
+JWT → token format
+
+8. What is Circuit Breaker?
+
+Answer:
+Prevents repeated failure calls (Resilience4j)
+
+9. How does Spring AOP proxy work?
+
+Answer:
+
+JDK proxy (interfaces)
+
+CGLIB (classes)
+
+10. How to optimize JPA performance?
+
+Answer:
+
+Use DTO projection
+
+Use batch fetching
+
+Avoid N+1 queries
+
+11. What is N+1 problem?
+
+Answer:
+Multiple queries for related entities.
+
+12. What is caching in Spring?
+
+Answer:
+Using @Cacheable to reduce DB calls.
+
+13. How to design scalable REST API?
+
+Answer:
+
+Stateless
+
+Load balancing
+
+Caching
+
+Pagination
+
+14. How to handle file upload in Spring Boot?
+@PostMapping("/upload")
+public String upload(@RequestParam MultipartFile file){
+    return file.getOriginalFilename();
+}
+15. How to implement logging using AOP?
+@Aspect
+@Component
+class LogAspect {
+    @Before("execution(* com.app.service.*.*(..))")
+    public void log(){
+        System.out.println("Method called");
+    }
+}
+⚡ RAPID FIRE (Top 20)
+
+Default bean scope? → Singleton
+
+REST status for created? → 201
+
+@Autowired vs @Inject? → same, Inject is Java standard
+
+HQL vs SQL? → HQL uses entity names
+
+@RestControllerAdvice? → global REST exception handler
+
+DispatcherServlet? → Front controller
+
+@Value? → inject property values
+
+Embedded server? → Tomcat
+
+Spring Boot port default? → 8080
+
+@EnableAutoConfiguration? → auto config
+
+PUT vs PATCH? → full vs partial update
+
+@Bean vs @Component? → manual vs auto
+
+CrudRepository vs JpaRepository? → JPA has more features
+
+@Primary? → default bean
+
+@Qualifier? → choose specific bean
+
+OpenSessionInView? → keeps session open
+
+DTO? → Data Transfer Object
+
+Stateless API? → no session
+
+CSRF? → Cross Site Request Forgery
+
+JAR vs WAR? → standalone vs external server
+
+🎯 TRICKY INTERVIEW QUESTIONS (10)
+1. Why field injection is not recommended?
+
+Answer: Hard to test, no immutability.
+
+2. Can @Transactional work on private methods?
+
+Answer: ❌ No (proxy limitation)
+
+3. Why we should not return Entity directly in API?
+
+Answer: Security + lazy loading issues
+
+4. What happens if two beans of same type exist?
+
+Answer: NoUniqueBeanDefinitionException
+
+5. Difference between @RestController and @Controller?
+
+Answer: REST returns JSON, Controller returns views
+
+6. Why use DTO instead of Entity?
+
+Answer: decoupling, security
+
+7. What is circular dependency?
+
+Answer: Bean A depends on B and B depends on A
+
+8. Can we use @ComponentScan multiple times?
+
+Answer: Yes
+
+9. Why is Spring Boot faster in development?
+
+Answer: Auto configuration + starters
+
+10. How to disable auto configuration?
+@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
