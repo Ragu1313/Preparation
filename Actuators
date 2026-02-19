@@ -1,0 +1,22 @@
+Actuators
+
+Spring Boot Actuator is a production-ready feature that provides built-in endpoints to monitor, manage, and observe the health, metrics, and internal state of a Spring Boot application.
+
+It provides built-in endpoints that give insights into your application's:
+
+Health
+
+Metrics
+
+Environment
+
+Beans
+
+Logs
+
+Thread dumps
+
+HTTP traces
+
+👉 In simple terms:
+Spring Boot Actuator = “Monitoring + Management layer” for your Spring Boot application
