@@ -20,3 +20,10 @@ HTTP traces
 
 👉 In simple terms:
 Spring Boot Actuator = “Monitoring + Management layer” for your Spring Boot application
+
+
+
+Swagger
+
+Swagger in Spring Boot is used to automatically generate interactive API documentation for your REST APIs. 
+It helps developers understand, test, and integrate APIs without reading backend code.
