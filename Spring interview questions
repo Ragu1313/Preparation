@@ -1,3 +1,14 @@
+why we have two type of bean creation? one - component , two - bean
+
+Why @Component fails with external/third-party classes
+How to configure bean names and aliases
+Using autowireCandidate for fine-grained control
+Setting init and destroy methods in @Bean
+The new Spring 6.x bootstrap property (default vs background)
+
+ref : https://www.youtube.com/watch?v=Q6eNJXPJv1Q
+
+
 🟢 BASIC LEVEL (15 Questions)
 1. What is Spring Framework?
 
