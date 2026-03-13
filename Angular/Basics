@@ -1,3 +1,4 @@
+
 For Angular ViewEncapsulation 
 https://medium.com/@angular-adventurer/understanding-viewencapsulation-in-angular-scenarios-examples-best-practices-dc2b06d6e7fc
 
@@ -8,11 +9,33 @@ Directives are needed in Angular to control DOM behavior, reuse functionality,
 simplify UI logic, and build dynamic applications efficiently.
 
 -------------------------------------------------------------------------------
+
+Pre-Atrribute directives
+ngstyle
+ngclass
+
+used for styling
+
 ngstyle overrides ngclass in angular if it applied to the same div with any conflict.
--------------------------------------------------------------------------------
 
 -------------------------------------------------------------------------------
+Predefined Structural directives
+*ngFor
+*ngIf
+*ngSwitch
 
+
+
+-------------------------------------------------------------------------------
+Reserved words
+odd
+even 
+count 
+first 
+last
+index
+
+$event -> gives the value when the event is triggred
 -------------------------------------------------------------------------------
 
 -------------------------------------------------------------------------------
