@@ -8,7 +8,7 @@ Directives are needed in Angular to control DOM behavior, reuse functionality,
 simplify UI logic, and build dynamic applications efficiently.
 
 -------------------------------------------------------------------------------
-
+ngstyle overrides ngclass in angular if it applied to the same div with any conflict.
 -------------------------------------------------------------------------------
 
 -------------------------------------------------------------------------------
