@@ -3,6 +3,10 @@ For Angular ViewEncapsulation
 https://medium.com/@angular-adventurer/understanding-viewencapsulation-in-angular-scenarios-examples-best-practices-dc2b06d6e7fc
 
 -------------------------------------------------------------------------------
+Component
+Directive
+Pipe
+
 
 why directive is needed in angular?
 Directives are needed in Angular to control DOM behavior, reuse functionality, 
@@ -24,7 +28,91 @@ Predefined Structural directives
 *ngIf
 *ngSwitch
 
+Angular does not simply take data and then generate HTML once.
+Instead it follows a template → data binding → DOM update process.
+Angular HTML Generation Flow
 
+1️⃣ Component provides data
+
+First the component class holds the data.
+
+Example:
+
+export class AppComponent {
+  isLoggedIn = true;
+  items = ['Apple', 'Banana', 'Mango'];
+}
+
+This is the data source.
+
+2️⃣ Angular reads the HTML template
+
+Example template:
+
+<div *ngIf="isLoggedIn">
+  Welcome User
+</div>
+
+<ul>
+  <li *ngFor="let item of items">
+    {{item}}
+  </li>
+</ul>
+
+Angular compiles this template.
+
+3️⃣ Angular converts structural directives
+
+Angular internally rewrites them using ng-template.
+
+Example conversion:
+
+<ng-template [ngIf]="isLoggedIn">
+  <div>Welcome User</div>
+</ng-template>
+
+<ng-template ngFor let-item [ngForOf]="items">
+  <li>{{item}}</li>
+</ng-template>
+4️⃣ Angular evaluates the data
+
+Angular checks the values from the component.
+
+Example:
+
+isLoggedIn = true
+items = ['Apple','Banana','Mango']
+5️⃣ Angular generates DOM elements
+
+Based on the data, Angular creates or removes elements.
+
+Generated HTML in the browser DOM:
+
+<div>Welcome User</div>
+
+<ul>
+  <li>Apple</li>
+  <li>Banana</li>
+  <li>Mango</li>
+</ul>
+Important Concept: Change Detection
+
+Angular constantly watches the data.
+
+If the data changes:
+
+this.items.push("Orange");
+
+Angular automatically updates the DOM.
+
+New DOM:
+
+<li>Apple</li>
+<li>Banana</li>
+<li>Mango</li>
+<li>Orange</li>
+
+So Angular is dynamic, not one-time HTML generation.
 
 -------------------------------------------------------------------------------
 Reserved words
@@ -37,8 +125,74 @@ index
 
 $event -> gives the value when the event is triggred
 -------------------------------------------------------------------------------
+PIPES
+  --predefined pipes
+  --user defined pipes
+
+PIPES --> Pipes are used to transform or format data in the template before displaying it in the UI.
+
+creating pipes cmd
+
+ng g p <<pipename>> 
+
+Syntax : 
+{{ value | pipeName }}
+
+predefined pipes
+  uppercase
+  lowercase
+  titlecase
+  date
+  number
+  asyn
+  json
+  
+
+userdefined pipes
+  in component ts file
+
+    @Pipe({name: 'reverse'})
+    export class ReversePipe implements PipeTransform {
+      transform(value: string) {
+        return value.split('').reverse().join('');
+      }
+    }
+
+  in html
+
+  {{ "Angular" | reverse }}
+
+Custom pipes
+
+in components file
+@Pipe({name: 'reverse'})
+export class ReversePipe implements PipeTransform {
+  transform(value: string) {
+    return value.split('').reverse().join('');
+  }
+}
+
+transform method is flexible like it can return anything we want and get anything.
+
+in html
+{{ "Angular" | reverse }}
 
 -------------------------------------------------------------------------------
+Two categories of pipe
+
+  --pure (Stateless pipes)
+  --impure (Stateful pipes)
+
+Pure pipe: 
+    Angular does NOT run the pipe on every change detection cycle.
+
+Impure Pipe:
+    An Impure Pipe runs every time Angular change detection runs, regardless of input changes.
+
+  @Pipe({
+    name: 'myPipe',
+    pure: false
+  })
 
 -------------------------------------------------------------------------------
 
