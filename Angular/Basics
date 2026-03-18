@@ -198,6 +198,14 @@ Impure Pipe:
 Deferred loading
 -------------------------------------------------------------------------------
 Signals
+
+    We can use signal to share data from one component to another component.
+
+@ModelSignal = Input() + Output() + EventEmitter()
+
+Example:
+variable : ModelSignal<String> = model.required<string>();
+
 -------------------------------------------------------------------------------
 Lifecycle Hooks
 -------------------------------------------------------------------------------
