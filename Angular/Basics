@@ -209,7 +209,29 @@ variable : ModelSignal<String> = model.required<string>();
 -------------------------------------------------------------------------------
 Lifecycle Hooks
 -------------------------------------------------------------------------------
+Why RSJX
 
+ajax/xhr -> async programming
+
+issue with ajax is api call 
+
+every ajax has 3 callback function
+      onSuccess
+      onFailure
+      isCompleted
+
+when we use nested ajax ,it is called as callback hells
+
+So we move to promises 
+but promises have certain drawback like 
+      not retryable
+      not cancellable
+      return only one value
+
+RXJS overcome these drawbacks
+      retryable
+      cancellable
+      return stream of value
 -------------------------------------------------------------------------------
 
 -------------------------------------------------------------------------------
