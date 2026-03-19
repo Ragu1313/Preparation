@@ -233,5 +233,6 @@ RXJS overcome these drawbacks
       cancellable
       return stream of value
 -------------------------------------------------------------------------------
+Async || Subscription || Observer
 
 -------------------------------------------------------------------------------
