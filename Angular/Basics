@@ -2,7 +2,7 @@
 For Angular ViewEncapsulation 
 https://medium.com/@angular-adventurer/understanding-viewencapsulation-in-angular-scenarios-examples-best-practices-dc2b06d6e7fc
 
--------------------------------------------------------------------------------
+===================================================================================
 Component
 Directive
 Pipe
@@ -12,7 +12,7 @@ why directive is needed in angular?
 Directives are needed in Angular to control DOM behavior, reuse functionality, 
 simplify UI logic, and build dynamic applications efficiently.
 
--------------------------------------------------------------------------------
+===================================================================================
 
 Pre-Atrribute directives
 ngstyle
@@ -22,7 +22,7 @@ used for styling
 
 ngstyle overrides ngclass in angular if it applied to the same div with any conflict.
 
--------------------------------------------------------------------------------
+===================================================================================
 Predefined Structural directives
 *ngFor
 *ngIf
@@ -114,7 +114,7 @@ New DOM:
 
 So Angular is dynamic, not one-time HTML generation.
 
--------------------------------------------------------------------------------
+===================================================================================
 Reserved words
 odd
 even 
@@ -124,7 +124,7 @@ last
 index
 
 $event -> gives the value when the event is triggred
--------------------------------------------------------------------------------
+===================================================================================
 PIPES
   --predefined pipes
   --user defined pipes
@@ -177,7 +177,7 @@ transform method is flexible like it can return anything we want and get anythin
 in html
 {{ "Angular" | reverse }}
 
--------------------------------------------------------------------------------
+===================================================================================
 Two categories of pipe
 
   --pure (Stateless pipes)
@@ -194,9 +194,9 @@ Impure Pipe:
     pure: false
   })
 
--------------------------------------------------------------------------------
+===================================================================================
 Deferred loading
--------------------------------------------------------------------------------
+===================================================================================
 Signals
 
     We can use signal to share data from one component to another component.
@@ -206,9 +206,185 @@ Signals
 Example:
 variable : ModelSignal<String> = model.required<string>();
 
--------------------------------------------------------------------------------
+===================================================================================
 Lifecycle Hooks
--------------------------------------------------------------------------------
+
+  ngOnInit
+  ngOnChanges
+  ngDoCheck
+  ngAfterContentInit
+  ngAfterContentChecked
+  ngAfterViewInit
+  ngAfterViewChecked
+  ngOnDestroy
+
+Constructor
+  --> used for only depedency injection not for bussiness logic
+
+---------------------------------------------------------------
+
+ngOnInit
+  --> runs automatically when a component is initialized (loaded)
+  --> used to initialiae values
+  --> set defualt values
+  --> used for api calls
+  --> used for building logic
+  
+  Constructor → ngOnInit → UI Render
+
+---------------------------------------------------------------
+
+ngOnChanges
+  --> Whenever an input property changes
+  --> It is used in a child component when data comes from a parent component
+
+Parent Component
+.ts
+  name = 'Ragu';
+.html
+  <app-child [userName]="name"></app-child>
+
+Child Component
+  
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+
+@Component({
+  selector: 'app-child',
+  template: `<p>{{ userName }}</p>`
+})
+export class ChildComponent implements OnChanges {
+
+  @Input() userName: string = '';
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
+  }
+
+}
+
+
+Parent sends data → userName
+Child receives via @Input
+If value changes → ngOnChanges() runs automatically
+
+---------------------------------------------------------------
+
+ngDoCheck
+  -->Every time Angular runs change detection
+
+when does it run
+✔ Button click
+✔ Input typing
+✔ API response
+✔ Timer / async events
+✔ Any UI update
+
+---------------------------------------------------------------
+
+ngAfterContentInit
+  -->When you pass content inside a component tag, Angular inserts it using:
+
+👉 <ng-content>
+
+After that insertion → ngAfterContentInit() runs
+
+Parent Component
+<app-child>
+  <p>This is projected content</p>
+</app-child>
+
+Child component
+  
+import { Component, AfterContentInit } from '@angular/core';
+
+@Component({
+  selector: 'app-child',
+  template: `
+    <h2>Child Component</h2>
+    <ng-content></ng-content>
+  `
+})
+export class ChildComponent implements AfterContentInit {
+
+  ngAfterContentInit() {
+    console.log('Content projected!');
+  }
+
+}
+
+LifeCycle Order
+
+ngOnChanges
+→ ngOnInit
+→ ngDoCheck
+→ ngAfterContentInit   ✅ (runs once)
+→ ngAfterContentChecked (runs multiple times)
+
+---------------------------------------------------------------
+
+ngAfterContentChecked
+  -->After Angular checks the projected content (ng-content)
+  
+Example
+
+import { Component, AfterContentChecked } from '@angular/core';
+
+@Component({
+  selector: 'app-child',
+  template: `<ng-content></ng-content>`
+})
+export class ChildComponent implements AfterContentChecked {
+
+  ngAfterContentChecked() {
+    console.log('Content checked!');
+  }
+
+}
+
+---------------------------------------------------------------
+ngAfterViewInit
+  --> After the component’s view (HTML + child components) is fully initialized
+
+Use it when you need:
+
+✔ Access DOM elements
+✔ Access child components
+✔ Perform UI-related logic
+✔ Work with @ViewChild
+
+LifeCycle Order
+
+ngOnChanges
+→ ngOnInit
+→ ngDoCheck
+→ ngAfterContentInit
+→ ngAfterContentChecked
+→ ngAfterViewInit   ✅ (runs once)
+→ ngAfterViewChecked (runs multiple times)
+
+---------------------------------------------------------------
+ngAfterViewChecked
+  --> After Angular checks the component’s view (HTML + child components)
+  --> never run api call in it, because the call same api infinite times.
+🔹 When does it run?
+✔ After view initialization
+✔ After every change detection cycle
+✔ After UI updates (clicks, typing, API response)
+
+---------------------------------------------------------------
+ngOnDestroy
+  --> Just before a component is destroyed (removed from DOM)
+
+✔ Unsubscribe from Observables
+✔ Stop timers (setInterval, setTimeout)
+✔ Remove event listeners
+✔ Clean up WebSocket connections
+
+
+
+---------------------------------------------------------------
+
+===================================================================================
 Why RSJX
 
 ajax/xhr -> async programming
@@ -232,7 +408,7 @@ RXJS overcome these drawbacks
       retryable
       cancellable
       return stream of value
--------------------------------------------------------------------------------
+===================================================================================
 Async || Subscription || Observer
 
 -------------------------------------------------------------------------------
